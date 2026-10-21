@@ -40,6 +40,7 @@ private func articleText(_ text: String, size: CGFloat = 14.5, weight: NSFont.We
 final class ArticleTextView: NSView {
     let textView = NSTextView()
     private let scroll = NSScrollView()
+    private var maxTextWidth: CGFloat?
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -56,7 +57,7 @@ final class ArticleTextView: NSView {
         textView.autoresizingMask = [.width]
         textView.minSize = NSSize(width: 0, height: 0)
         textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        textView.textContainer?.widthTracksTextView = true
+        textView.textContainer?.widthTracksTextView = false
         scroll.documentView = textView
         addSubview(scroll)
         NSLayoutConstraint.activate([
@@ -72,6 +73,13 @@ final class ArticleTextView: NSView {
     func setContent(_ content: NSAttributedString) {
         textView.textStorage?.setAttributedString(content)
         layoutTextView()
+        DispatchQueue.main.async { [weak self] in self?.scrollToTop() }
+    }
+
+    private func scrollToTop() {
+        textView.scrollRangeToVisible(NSRange(location: 0, length: 0))
+        scroll.contentView.scroll(to: .zero)
+        scroll.reflectScrolledClipView(scroll.contentView)
     }
 
     func setBackgroundColor(_ color: NSColor) {
@@ -79,6 +87,11 @@ final class ArticleTextView: NSView {
         scroll.backgroundColor = color
         textView.drawsBackground = true
         textView.backgroundColor = color
+    }
+
+    func setMaxTextWidth(_ width: CGFloat) {
+        maxTextWidth = width
+        layoutTextView()
     }
 
     override func layout() {
@@ -91,7 +104,9 @@ final class ArticleTextView: NSView {
         guard width > 10 else { return }
         textView.frame = NSRect(x: 0, y: 0, width: width, height: max(scroll.contentSize.height, 10))
         if let container = textView.textContainer, let layout = textView.layoutManager {
-            container.containerSize = NSSize(width: width - textView.textContainerInset.width * 2,
+            let available = width - textView.textContainerInset.width * 2
+            let textWidth = min(maxTextWidth ?? available, available)
+            container.containerSize = NSSize(width: max(textWidth, 10),
                                              height: CGFloat.greatestFiniteMagnitude)
             layout.ensureLayout(for: container)
             let used = layout.usedRect(for: container)
@@ -108,6 +123,7 @@ final class HomeViewController: NSViewController {
         root.layer?.backgroundColor = NSColor.white.cgColor
         let article = ArticleTextView()
         article.setBackgroundColor(.white)
+        article.setMaxTextWidth(700)
         article.translatesAutoresizingMaskIntoConstraints = false
         root.addSubview(article)
         NSLayoutConstraint.activate([
@@ -123,20 +139,20 @@ final class HomeViewController: NSViewController {
             content.append(logo)
             content.append(NSAttributedString(string: "\n", attributes: [.font: NSFont.systemFont(ofSize: 8)]))
         }
-        content.append(articleText("星空难民营，门虚掩，灯常亮，帐篷不大，夜色管够。\n", size: 26, weight: .semibold,
+        content.append(articleText("星空难民营，门虚掩，灯常亮，帐篷不大，夜色管够。\n", size: 25, weight: .semibold,
                                    style: {
-                                       let s = articleStyle(); s.lineSpacing = 8; s.paragraphSpacing = 18; return s
+                                       let s = articleStyle(); s.lineSpacing = 7.5; s.paragraphSpacing = 17.5; return s
                                    }()))
         let bodyStyle = articleStyle()
-        bodyStyle.lineSpacing = 5.5
-        bodyStyle.paragraphSpacing = 18.5
+        bodyStyle.lineSpacing = 5.2
+        bodyStyle.paragraphSpacing = 17.5
         content.append(articleText("""
         此处不设前台不问来路，只问星点对齐否。
         市面星空软件，菜单套娃，会员催租，界面像从上世纪课件里出土。我索性攒了一个：能堆栈、能校准、能对齐星点、能去星、能降噪；星轨、延时、全景、窄带，也略通拳脚。参数有点认人，按钮有点慢热，模型挑图如挑食。但路子是按拍星人的夜路踩出来的：多出图，少绕弯，少熬夜。
         你若也拍星空，拿去用便是。遇问题或想聊拍摄、后期、代码，欢迎加群。邮箱：kuojing@qq.com。加群与反馈皆可发信，标题写“星空难民营”即可。一人守营，回复不保证秒回，保证不是自动回复。
         若它替你省下一点时间，或少熬一个调图夜，扫码一杯瑞幸请我喝，我的钱有用。
         最后，谢每一个愿意在深夜抬头的人。谢 StarFans 借来思路，Siril 借来配准，StarNet2、DeepSNR、SkySeg 诸作者借来手艺，以及所有把天文工具开源出来的人。无前人搭棚，此营连帐篷都支不起来。
-        """, size: 18.5, style: bodyStyle))
+        """, size: 17.5, style: bodyStyle))
         if let qr = AppAssets.attachment("333.png", width: 400) {
             content.append(NSAttributedString(string: "\n", attributes: [.font: NSFont.systemFont(ofSize: 10)]))
             content.append(qr)
