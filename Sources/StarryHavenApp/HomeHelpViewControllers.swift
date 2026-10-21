@@ -13,6 +13,16 @@ enum AppAssets {
     static func attachment(_ name: String, width: CGFloat) -> NSAttributedString? {
         guard let image = image(name), image.size.width > 0 else { return nil }
         let height = width * image.size.height / image.size.width
+        return attachment(image, width: width, height: height)
+    }
+
+    static func attachment(_ name: String, height: CGFloat) -> NSAttributedString? {
+        guard let image = image(name), image.size.height > 0 else { return nil }
+        let width = height * image.size.width / image.size.height
+        return attachment(image, width: width, height: height)
+    }
+
+    private static func attachment(_ image: NSImage, width: CGFloat, height: CGFloat) -> NSAttributedString {
         let attachment = NSTextAttachment()
         attachment.image = image
         attachment.bounds = NSRect(x: 0, y: 0, width: width, height: height)
@@ -135,8 +145,8 @@ final class HomeViewController: NSViewController {
         self.view = root
 
         let content = NSMutableAttributedString()
-        if let logo = AppAssets.attachment("logo-b-rounded.png", width: 220) {
-            content.append(logo)
+        if let topbar = AppAssets.attachment("topbar.png", height: 150) {
+            content.append(topbar)
             content.append(NSAttributedString(string: "\n", attributes: [.font: NSFont.systemFont(ofSize: 8)]))
         }
         content.append(articleText("星空难民营，门虚掩，灯常亮，帐篷不大，夜色管够。\n", size: 25, weight: .semibold,
