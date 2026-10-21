@@ -135,7 +135,7 @@ final class HomeViewController: NSViewController {
         self.view = root
 
         let content = NSMutableAttributedString()
-        if let logo = AppAssets.attachment("logo-w.png", width: 220) {
+        if let logo = AppAssets.attachment("logo-b-rounded.png", width: 220) {
             content.append(logo)
             content.append(NSAttributedString(string: "\n", attributes: [.font: NSFont.systemFont(ofSize: 8)]))
         }
