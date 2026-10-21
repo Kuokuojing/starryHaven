@@ -141,7 +141,11 @@ final class HomeViewController: NSViewController {
         }
         content.append(articleText("星空难民营，门虚掩，灯常亮，帐篷不大，夜色管够。\n", size: 25, weight: .semibold,
                                    style: {
-                                       let s = articleStyle(); s.lineSpacing = 7.5; s.paragraphSpacing = 17.5; return s
+                                       let s = articleStyle()
+                                       s.lineSpacing = 7.5
+                                       s.paragraphSpacing = 17.5
+                                       s.paragraphSpacingBefore = 28
+                                       return s
                                    }()))
         let bodyStyle = articleStyle()
         bodyStyle.lineSpacing = 5.2
