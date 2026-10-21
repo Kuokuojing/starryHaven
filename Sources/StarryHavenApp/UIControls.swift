@@ -154,6 +154,10 @@ final class ImagePreviewView: NSView {
         layer?.cornerRadius = 6
         imageView.imageScaling = .scaleProportionallyUpOrDown
         imageView.imageFrameStyle = .none
+        imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         placeholder.textColor = .tertiaryLabelColor
         placeholder.font = .systemFont(ofSize: 13)
