@@ -176,5 +176,5 @@ CI 在 GitHub Actions 的 macOS runner 上执行 `swift build -c release` 和 `s
 
 ## 联系
 
-- 邮箱：kuojing@qq.com
+- 微信：likuojing
 - Issue：https://github.com/Kuokuojing/starryHaven/issues

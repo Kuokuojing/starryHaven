@@ -152,12 +152,12 @@ final class HomeViewController: NSViewController {
         bodyStyle.paragraphSpacing = 17.5
         content.append(articleText("""
         此处不设前台不问来路，只问星点对齐否。
-        市面星空软件，菜单套娃，会员催租，界面像从上世纪课件里出土。我索性攒了一个：能堆栈、能校准、能对齐星点、能去星、能降噪；星轨、延时、全景、窄带，也略通拳脚。参数有点认人，按钮有点慢热，模型挑图如挑食。但路子是按拍星人的夜路踩出来的：多出图，少绕弯，少熬夜。
-        你若也拍星空，拿去用便是。遇问题或想聊拍摄、后期、代码，欢迎加群。邮箱：kuojing@qq.com。加群与反馈皆可发信，标题写“星空难民营”即可。一人守营，回复不保证秒回，保证不是自动回复。
+        市面上的星空软件，菜单套娃，会员催租，界面像从上世纪课件里出土。我索性攒了一个：能堆栈、能校准、能对齐星点、能去星、能降噪；星轨、延时、全景、窄带，也略通拳脚。参数有点认人，按钮有点慢热，模型挑图如挑食。但路子是按拍星人的夜路踩出来的：多出图，少绕弯，少熬夜。
+        你若也拍星空，拿去用便是。遇到问题，或想聊拍摄、后期、代码，欢迎加群。我的微信是 V:likuojing，加群或反馈都可以找我，备注写“星空难民营”即可。一人守营，回复不保证秒回，保证不是自动回复。
         若它替你省下一点时间，或少熬一个调图夜，扫码一杯瑞幸请我喝，我的钱有用。
-        最后，谢每一个愿意在深夜抬头的人。谢 StarFans 借来思路，Siril 借来配准，StarNet2、DeepSNR、SkySeg 诸作者借来手艺，以及所有把天文工具开源出来的人。无前人搭棚，此营连帐篷都支不起来。
+        最后，谢每一个愿意在深夜抬头的人。感谢 StarFans 提供的思路，Siril 提供的配准方法，StarNet2、DeepSNR、SkySeg 作者分享的手艺，也感谢所有把天文工具开源出来的人。无前人搭棚，此营连帐篷都支不起来。
         """, size: 17.5, style: bodyStyle))
-        if let qr = AppAssets.attachment("333.png", width: 400) {
+        if let qr = AppAssets.attachment("Coffee@2x.png", width: 400) {
             content.append(NSAttributedString(string: "\n", attributes: [.font: NSFont.systemFont(ofSize: 10)]))
             content.append(qr)
             content.append(NSAttributedString(string: "\n", attributes: [.font: NSFont.systemFont(ofSize: 8)]))

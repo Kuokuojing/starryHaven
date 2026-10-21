@@ -240,7 +240,7 @@ final class SidebarViewController: NSViewController, NSTableViewDataSource, NSTa
             scroll.trailingAnchor.constraint(equalTo: root.trailingAnchor, constant: -10),
             scroll.bottomAnchor.constraint(equalTo: root.bottomAnchor, constant: -40),
         ])
-        let footer = NSTextField(labelWithString: "原生 macOS · 线性浮点处理")
+        let footer = NSTextField(labelWithString: "V:likuojing @ 2026.10")
         footer.translatesAutoresizingMaskIntoConstraints = false
         footer.font = .systemFont(ofSize: 10)
         footer.textColor = .tertiaryLabelColor
