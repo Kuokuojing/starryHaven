@@ -1,0 +1,46 @@
+name: Bug 报告
+description: 报告可复现的崩溃、错误结果或界面问题
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先搜索现有 Issue。涉及模型的问题，请注明模型是否已正确配置。
+  - type: textarea
+    id: what
+    attributes:
+      label: 发生了什么
+      description: 简要描述现象和预期结果。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开...
+        2. 导入...
+        3. 点击...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 版本或提交
+      placeholder: v0.1.0 / commit hash
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS 版本与芯片
+      placeholder: macOS 14.6 / Apple M2
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志、截图或样例文件
+      description: 请勿上传包含隐私的原始照片；可以裁切或使用合成图。
+    validations:
+      required: false

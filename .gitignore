@@ -1,0 +1,26 @@
+# SwiftPM / Xcode
+.build/
+.swiftpm/
+DerivedData/
+*.xcodeproj
+xcuserdata/
+*.xcuserstate
+*.dSYM/
+
+# App bundle and evidence
+build/
+evidence/
+demo/
+*.starproject
+
+# Third-party model assets (never commit weights)
+Models/
+*.mlpackage/
+*.mlmodelc/
+*.onnx
+*.onnx.data
+LensProfiles.zip
+
+# macOS
+.DS_Store
+._*
