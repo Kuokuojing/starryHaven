@@ -163,6 +163,23 @@ struct IOTests {
         TestEvidence.write("2D FITS -32 and 16-bit decoded \(w)x\(h) and 10x8 plus 100x100 with correct values", name: "io-fits-2d.log")
     }
 
+    @Test func integerFITSNormalizesForProcessing() throws {
+        let w = 4, h = 3
+        let values: [Float] = [1000, 2000, 4000, 8000, 16000, 32000,
+                               1200, 2400, 4800, 9600, 19200, 38400]
+        let data = make2DFITS(width: w, height: h, bitpix: 16, bzero: 32768, values: values)
+        let raw = try FITS.read(data: data)
+        #expect(raw.pixels[0] > 100)
+        let normalized = try FITS.read(data: data, normalizeIntegerData: true)
+        #expect(abs(normalized.pixels[0] - 1000.0 / 65535.0) < 1e-6)
+
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".fits")
+        try data.write(to: url)
+        let loaded = try ImageLoader.load(url: url)
+        #expect(abs(loaded.pixels[0] - 1000.0 / 65535.0) < 1e-6)
+        TestEvidence.write("16-bit FITS normalized for processing", name: "io-fits-normalize.log")
+    }
+
     @Test func fitsWriterPadsToRecordBoundary() throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)

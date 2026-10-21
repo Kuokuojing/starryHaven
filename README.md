@@ -138,7 +138,7 @@ Sources/
 ├── StarryHavenCLI/       命令行与自测入口
 └── COnnxRuntime/         ONNX Runtime C 桥
 Tests/
-└── StarryHavenCoreTests/ 39 个测试 / 9 个套件
+└── StarryHavenCoreTests/ 40 个测试 / 9 个套件
 Scripts/                  构建、打包、证据采集
 Assets/                   图标、帮助截图、首页图片
 ```

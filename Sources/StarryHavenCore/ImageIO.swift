@@ -59,7 +59,7 @@ public enum ImageLoader {
 
     public static func load(url: URL) throws -> ImageBuffer {
         if isFITS(url: url) {
-            return try FITS.read(url: url)
+            return try FITS.read(url: url, normalizeIntegerData: true)
         }
         if isRAW(url: url) {
             return try loadRAW(url: url)

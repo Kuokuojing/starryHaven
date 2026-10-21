@@ -85,12 +85,12 @@ public enum FITS {
         return Int(t.trimmingCharacters(in: .whitespaces))
     }
 
-    public static func read(url: URL) throws -> ImageBuffer {
+    public static func read(url: URL, normalizeIntegerData: Bool = false) throws -> ImageBuffer {
         let data = try Data(contentsOf: url, options: [.mappedIfSafe])
-        return try read(data: data)
+        return try read(data: data, normalizeIntegerData: normalizeIntegerData)
     }
 
-    public static func read(data: Data) throws -> ImageBuffer {
+    public static func read(data: Data, normalizeIntegerData: Bool = false) throws -> ImageBuffer {
         let info = try readHeader(data)
         let n = info.width * info.height
         let planes = max(info.planes, 1)
@@ -143,6 +143,20 @@ public enum FITS {
                     } else {
                         out.pixels[i] = value
                     }
+                }
+            }
+        }
+        if normalizeIntegerData {
+            let divisor: Float?
+            switch info.bitpix {
+            case 8: divisor = 255
+            case 16: divisor = 65535
+            case 32: divisor = info.bzero != 0 ? 4_294_967_295 : 2_147_483_647
+            default: divisor = nil
+            }
+            if let divisor = divisor {
+                for i in out.pixels.indices {
+                    out.pixels[i] = min(max(out.pixels[i] / divisor, 0), 1)
                 }
             }
         }

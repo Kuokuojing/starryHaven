@@ -6,6 +6,7 @@ final class MainViewController: NSViewController {
     private let sidebarController = SidebarViewController()
     private let detailContainer = NSView()
     private var current: NSViewController?
+    private var controllers: [SidebarSection: NSViewController] = [:]
 
     override func loadView() {
         let root = NSView()
@@ -70,23 +71,28 @@ final class MainViewController: NSViewController {
     @discardableResult
     private func show(_ section: SidebarSection) -> NSViewController {
         let controller: NSViewController
-        switch section {
-        case .home:
-            controller = HomeViewController()
-        case .help:
-            controller = HelpViewController()
-        case .stack:
-            controller = StackWorkspaceViewController()
-        case .trails:
-            controller = StarTrailWorkspaceViewController()
-        case .timelapse:
-            controller = TimelapseWorkspaceViewController()
-        case .panorama:
-            controller = PanoramaWorkspaceViewController()
-        case .narrowband:
-            controller = NarrowbandWorkspaceViewController()
-        case .toolbox:
-            controller = ToolboxWorkspaceViewController()
+        if let existing = controllers[section] {
+            controller = existing
+        } else {
+            switch section {
+            case .home:
+                controller = HomeViewController()
+            case .help:
+                controller = HelpViewController()
+            case .stack:
+                controller = StackWorkspaceViewController()
+            case .trails:
+                controller = StarTrailWorkspaceViewController()
+            case .timelapse:
+                controller = TimelapseWorkspaceViewController()
+            case .panorama:
+                controller = PanoramaWorkspaceViewController()
+            case .narrowband:
+                controller = NarrowbandWorkspaceViewController()
+            case .toolbox:
+                controller = ToolboxWorkspaceViewController()
+            }
+            controllers[section] = controller
         }
         current?.view.removeFromSuperview()
         current?.removeFromParent()
