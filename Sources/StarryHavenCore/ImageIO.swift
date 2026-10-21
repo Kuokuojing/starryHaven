@@ -124,7 +124,8 @@ public enum ImageLoader {
         }
         filter.isDraftModeEnabled = false
         if #available(macOS 26.0, *) {
-            filter.isHighlightRecoveryEnabled = true
+            // Newer SDKs expose this property; KVC keeps older SDKs compiling.
+            filter.setValue(true, forKey: "highlightRecoveryEnabled")
         }
         guard let output = filter.outputImage else {
             throw ImageIOError.cannotDecode(url.lastPathComponent)
